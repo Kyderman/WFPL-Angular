@@ -2,16 +2,15 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 import * as Bluebird from 'bluebird';
-import { Subscription, BehaviorSubject } from 'rxjs';
+import { Subscription, BehaviorSubject, timer } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
+import { RefreshDialogComponent } from './refresh-dialog/refresh-dialog.component';
 
 @Injectable()
 export class AuthenticationService {
@@ -60,7 +59,7 @@ export class AuthenticationService {
         }), {
           headers: new HttpHeaders().set('Content-type', 'application/json'),
         }).toPromise();
-      let user = await User.initialize(response['data']['user']);
+      let user = new User(response['data']['user']);
       this.currentUserSubject.next(user);
       let token = response['data']['token'];
       this.setToken(token);
@@ -88,7 +87,7 @@ export class AuthenticationService {
 
   public async refreshToken(): Promise<any> {
     try {
-      let response = await this.http.get(`${process.env.SERVER}refresh`).toPromise();
+      let response = await this.http.get(`${environment.apiUrl}refresh`).toPromise();
       this.tokenCheckSub.unsubscribe();
       this.setToken(response['data']['token']);
       let token = this.jwtHelper.tokenGetter();
@@ -116,7 +115,7 @@ export class AuthenticationService {
       } else if (timeToExpire < dialogTime) {
         dialogTime = timeToExpire;
       }
-      this.tokenCheckSub = Observable.timer(timeToDialog)
+      this.tokenCheckSub = timer(timeToDialog)
         .subscribe(() => {
           // cause check for whether a refresh token is wanted
           let dialogRef = this.dialog.open(RefreshDialogComponent, {

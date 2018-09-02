@@ -1,0 +1,16 @@
+<div class="custom-dialog">
+  <mat-toolbar>
+    <h2 mat-dialog-title>You will be logged out in {{countDown | async}} seconds</h2>
+    <span class="spacer"></span>
+
+    <button mat-icon-button color="warn" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <button mat-icon-button color="primary" (click)="onSubmit()">
+      <mat-icon>done</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-dialog-content class="custom-dialog-content">
+    <p>Would you like to remain logged in?</p>
+  </mat-dialog-content>
+</div>

@@ -6,6 +6,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserService } from './user/user.service';
+import { RefreshDialogComponent } from './authentication/refresh-dialog';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,9 @@ import { UserService } from './user/user.service';
   providers: [
     UserService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent,
+    RefreshDialogComponent
+  ]
 })
 export class AppModule { }
