@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+  <button *ngIf="user !== null && isReady" mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <a mat-button [routerLink]="['/']"><mat-icon>security</mat-icon> WFPL</a>
+  <span class="spacer"></span>
+
+  <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button *ngIf="user == null && isReady" mat-menu-item routerLink="/login">
+      <mat-icon>fingerprint</mat-icon>
+      <span>Login</span>
+    </button>
+    <button *ngIf="user != null && isReady" mat-menu-item disabled>
+      <mat-icon>account_circle</mat-icon>
+      <span>Hello, {{user.username}}</span>
+    </button>
+    <button *ngIf="user != null && isReady" mat-menu-item (click)="doLogout()">
+      <mat-icon>cancel</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu> -->
+</mat-toolbar>

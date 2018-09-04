@@ -1,0 +1,7 @@
+<h1 matDialogTitle>Are you sure?</h1>
+<mat-dialog-content><p>{{message}}</p></mat-dialog-content>
+<mat-dialog-actions>
+  
+  <button mat-button (click)="returnResult(false)">CANCEL</button>
+  <button mat-raised-button color="primary" (click)="returnResult(true)">YES</button>
+</mat-dialog-actions>

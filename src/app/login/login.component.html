@@ -1,0 +1,34 @@
+<div [@fadeInAnimation]>
+  <mat-toolbar color="">
+    <span>Login</span>
+    <span class="spacer"></span>
+    <button mat-stroked-button color="primary" (click)="doLogin()">SUBMIT</button>
+  </mat-toolbar>
+  <mat-divider></mat-divider>
+  <div>
+    <mat-card fxFlexOffset.gt-sm="33" fxFlex.gt-sm="33">
+      <mat-card-content>
+        <form [formGroup]="loginForm.form">
+          <mat-form-field class="full-width">
+            <input formControlName="username" autocomplete="username" matInput placeholder="Username" required>
+            <mat-error *ngFor="let error of loginForm.formErrors.username">
+              {{error}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input formControlName="password" autocomplete="current-password" matInput placeholder="Password" required type="password">
+            <mat-error *ngFor="let error of loginForm.formErrors.password">
+              {{error}}
+            </mat-error>
+          </mat-form-field>
+        </form>
+        
+      </mat-card-content>
+      <mat-card-footer>
+        <div [hidden]="isNotLoading">
+          <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
+        </div>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>
