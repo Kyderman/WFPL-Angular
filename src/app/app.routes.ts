@@ -9,7 +9,7 @@ export const ROUTES: Routes = [
   { path: '', component: HomeComponent },
   {
     path: 'login',
-    loadChildren: 'app/login/login.module#LoginModule',
+    loadChildren: './login/login.module#LoginModule',
     canActivate: [AntiAuthGuard]
-  },
+  }
 ];

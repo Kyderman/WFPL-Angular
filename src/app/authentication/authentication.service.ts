@@ -139,11 +139,11 @@ export class AuthenticationService {
   }
 
   public setToken(token: string): void {
-    localStorage.setItem('scrummy_access_token', token);
+    localStorage.setItem('access_token', token);
   }
 
   public purgeAuth(): void {
-    localStorage.removeItem('scrummy_access_token');
+    localStorage.removeItem('access_token');
     this.currentUserSubject.next(null);
   }
 

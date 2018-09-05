@@ -16,9 +16,13 @@ export class LoginComponent implements OnInit {
   public isNotLoading = true;
   public loginForm: LoginForm;
 
-  constructor(public auth: AuthenticationService, public router: Router,
-              private fb: FormBuilder, public snackBar: MatSnackBar) {
-    this.loginForm = new LoginForm(fb);
+  constructor(
+    public auth: AuthenticationService,
+    public router: Router,
+    private fb: FormBuilder,
+    public snackBar: MatSnackBar
+  ) {
+    this.loginForm = new LoginForm(this.fb);
   }
 
   public ngOnInit() {
@@ -37,12 +41,12 @@ export class LoginComponent implements OnInit {
       const result = await this.loginForm.validate(this.snackBar);
       if (!result) { return; }
 
-      await this.auth.login(result.username, result.password);
+      await this.auth.login(result.email, result.password);
 
       this.snackBar.open('You have successfully logged in', '', {
         duration: 3000
       });
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/']);
 
     } catch {
       this.snackBar.open('There was a problem logging in, please try again', '', {

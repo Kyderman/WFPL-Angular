@@ -10,8 +10,8 @@
       <mat-card-content>
         <form [formGroup]="loginForm.form">
           <mat-form-field class="full-width">
-            <input formControlName="username" autocomplete="username" matInput placeholder="Username" required>
-            <mat-error *ngFor="let error of loginForm.formErrors.username">
+            <input formControlName="email" autocomplete="email" matInput placeholder="Email" required>
+            <mat-error *ngFor="let error of loginForm.formErrors.email">
               {{error}}
             </mat-error>
           </mat-form-field>
@@ -22,7 +22,7 @@
             </mat-error>
           </mat-form-field>
         </form>
-        
+
       </mat-card-content>
       <mat-card-footer>
         <div [hidden]="isNotLoading">

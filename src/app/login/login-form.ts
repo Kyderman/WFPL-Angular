@@ -6,11 +6,11 @@ export class LoginForm {
 
   public form: FormGroup;
   public formErrors = {
-    username: [],
+    email: [],
     password: [],
   };
   public validationMessages = {
-    username: {
+    email: {
       required: 'Username is required.'
     },
     password: {
@@ -38,7 +38,7 @@ export class LoginForm {
 
   private createForm() {
     this.form = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
   }

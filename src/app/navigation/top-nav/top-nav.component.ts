@@ -1,11 +1,9 @@
 
 import { User } from '../../user/user';
-import { Component, Input, OnInit, OnChanges, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../../authentication/authentication.service';
-import { MatSidenav, MatSnackBar, MatDialog } from '@angular/material';
-import { MediaMatcher } from '@angular/cdk/layout';
+import { MatSidenav, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'top-nav',
@@ -15,29 +13,23 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class TopNavComponent implements OnInit {
   @Input() public sidenav: MatSidenav;
   public user: User = null;
-  public account: Account = null;
-  public isReady: Boolean = false;
 
   constructor(
-    public auth: AuthenticationService,
+    public authService: AuthenticationService,
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {}
 
   public async ngOnInit() {
     console.log('hello `Top Nav` component');
-    // this.userSelService.currentUserSubject.subscribe((u) => {
-    //   this.user = u;
-    // });
-    // this.accSelService.currentAccountSubject.subscribe((a) => {
-    //   this.account = a;
-    // });
-    this.isReady = true;
+    this.authService.currentUserSubject.subscribe((u) => {
+      this.user = u;
+    });
   }
 
   public async doLogout() {
     this.sidenav.close();
-    await this.auth.logout();
+    await this.authService.logout();
   }
 
 

@@ -58,7 +58,6 @@ export function getJwtToken(): string {
         ]
       }
     }),
-    environment.production ? ServiceWorkerModule.register('../ngsw-worker.js') : ServiceWorkerModule.register('../ngsw-worker.dev.js'),
     ReactiveFormsModule
   ],
   providers: [
