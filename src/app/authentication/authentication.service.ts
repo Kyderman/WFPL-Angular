@@ -44,7 +44,6 @@ export class AuthenticationService {
         return false;
       }
     } catch (err) {
-      console.log(err);
       this.purgeAuth();
       return Error('User couldnt be authenticated properly');
     }
