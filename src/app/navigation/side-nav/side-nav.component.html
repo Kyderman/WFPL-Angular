@@ -1,4 +1,9 @@
 <mat-nav-list>
+  <a mat-list-item [routerLink]="['/admin']" #rl7="routerLinkActive" *ngIf="isAdmin" [routerLinkActive]="['side-nav-active']">
+    <mat-icon [color]="rl7.isActive ? '' : 'primary'">verified_user</mat-icon>
+    <h4 matLine>Admin</h4>
+    <mat-divider></mat-divider>
+  </a>
   <!-- <a mat-list-item [routerLink]="['/dashboard']" #rl1="routerLinkActive" [routerLinkActive]="['side-nav-active']">
     <mat-icon [color]="rl1.isActive ? '' : 'primary'">dashboard</mat-icon>
     <h4 matLine>Dashboard</h4>

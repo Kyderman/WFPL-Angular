@@ -23,6 +23,8 @@ import { AuthenticationService } from './authentication/authentication.service';
 import { AuthGuard } from './guards/auth.guard';
 import { AntiAuthGuard } from './guards/anti-auth.guard';
 import { AuthorizationGuard } from './guards/authorization-guard';
+import { AppService } from './app.service';
+import { UserBuilder } from './user/user.builder';
 
 export function getJwtToken(): string {
   return localStorage.getItem('access_token');
@@ -65,7 +67,9 @@ export function getJwtToken(): string {
     AuthenticationService,
     AuthGuard,
     AntiAuthGuard,
-    AuthorizationGuard
+    AuthorizationGuard,
+    AppService,
+    UserBuilder
   ],
   bootstrap: [
     AppComponent,

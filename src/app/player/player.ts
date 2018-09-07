@@ -1,30 +1,23 @@
-import { Role } from "../role/role";
 import * as Bluebird from 'bluebird';
 
-export class User {
+export class Player {
 
   public id: number = null;
-  public email: string = '';
   public firstName: string = '';
   public lastName: string = '';
+  public currentSeasonPoints: number = 0;
+  public currentValue: number = 0;
   public createdAt: Date = null;
   public updatedAt: Date = null;
-  public roles: Role[] = [];
 
   constructor(data: any) {
     this.id = data.id;
-    this.email = data.email;
     this.firstName = data.firstName;
     this.lastName = data.lastName;
+    this.currentSeasonPoints = data.currentSeasonPoints;
+    this.currentValue = data.currentValue;
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
-  }
-
-  public async isAdmin() {
-    let a = await Bluebird.any(this.roles, async (r) => {
-      r.name === 'Admin';
-    })
-    return a.length !== null;
   }
 
 }

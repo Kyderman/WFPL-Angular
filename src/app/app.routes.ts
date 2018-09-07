@@ -11,5 +11,11 @@ export const ROUTES: Routes = [
     path: 'login',
     loadChildren: './login/login.module#LoginModule',
     canActivate: [AntiAuthGuard]
+  },
+  {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminModule',
+    canActivate: [AuthorizationGuard],
+    data: {roles: ['Admin']}
   }
 ];

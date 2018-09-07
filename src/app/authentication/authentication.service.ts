@@ -11,6 +11,7 @@ import { environment } from '../../environments/environment';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
 import { RefreshDialogComponent } from './refresh-dialog/refresh-dialog.component';
+import { UserBuilder } from '../user/user.builder';
 
 @Injectable()
 export class AuthenticationService {
@@ -23,7 +24,8 @@ export class AuthenticationService {
     public jwtHelper: JwtHelperService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    public userService: UserService
+    public userService: UserService,
+    public userBuilder: UserBuilder
   ) { }
 
   public async isAuthenticated(isTokenCheck) {
@@ -58,7 +60,7 @@ export class AuthenticationService {
         }), {
           headers: new HttpHeaders().set('Content-type', 'application/json'),
         }).toPromise();
-      let user = new User(response['data']['user']);
+      let user = await this.userBuilder.create(response['data']['user']);
       this.currentUserSubject.next(user);
       let token = response['data']['token'];
       this.setToken(token);
