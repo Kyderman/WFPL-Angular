@@ -1,0 +1,10 @@
+<mat-nav-list>
+  <mat-list-item *ngIf="competitions.length === 0">
+    <mat-icon color="warn" mat-list-icon>error</mat-icon>
+    <h3 matLine>No competitions available</h3>
+  </mat-list-item>
+  <mat-list-item *ngFor="let c of competitions" (click)="selectCompetition(c)">
+    <mat-icon mat-list-icon>done</mat-icon>
+    <h3 matLine>{{c.name}}</h3>
+  </mat-list-item>
+</mat-nav-list>

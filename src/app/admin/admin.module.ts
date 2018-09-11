@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminCompetitionListComponent } from './admin-dashboard/admin-competition-list/admin-competition-list.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
     ReactiveFormsModule
   ],
   declarations: [
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    AdminCompetitionListComponent
   ]
 })
 export class AdminModule { }

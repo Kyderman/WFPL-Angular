@@ -14,3 +14,27 @@ body { margin: 0; height: 100%; font-family: 'Roboto', sans-serif; }
 .full-width {
   width: 100%;
 }
+
+.content-area {
+  padding: 15px;
+}
+
+.mat-typography .mat-card-outer-title {
+  margin: 0 0 10px;
+}
+
+mat-card.mat-card-list {
+  padding: 0px;
+  margin-bottom: 15px;
+
+  .mat-nav-list {
+    padding-top: 0px;
+
+    .mat-subheader:first-child {
+      margin-top: 0px;
+    }
+  }
+  .mat-card-footer {
+    margin: 0 0 0 0;
+  }
+}

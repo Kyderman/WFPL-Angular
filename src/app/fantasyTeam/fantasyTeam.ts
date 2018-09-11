@@ -1,3 +1,5 @@
+import { Player } from "../player/player";
+
 export class FantasyTeam {
 
   public id: number = null;
@@ -11,6 +13,8 @@ export class FantasyTeam {
   public isPrivate: boolean = false;
   public createdAt: Date = null;
   public updatedAt: Date = null;
+
+  public players: Player[] = [];
 
   constructor(data: any) {
     this.id = data.id;

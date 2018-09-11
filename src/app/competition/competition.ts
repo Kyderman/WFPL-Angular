@@ -13,9 +13,9 @@ export class Competition {
 
   constructor(data: any) {
     this.id = data.id;
-    this.name = data.email;
-    this.currentGameweek = data.firstName;
-    this.currentSeason = data.lastName;
+    this.name = data.name;
+    this.currentGameweek = data.currentGameweek;
+    this.currentSeason = data.currentSeason;
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
   }
