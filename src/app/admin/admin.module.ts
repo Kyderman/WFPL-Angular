@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AdminCompetitionListComponent } from './admin-dashboard/admin-competition-list/admin-competition-list.component';
+import { AdminService } from './admin.service';
+import { CompetitionNewComponent } from '../competition/competition-new/competition-new.component';
 
 @NgModule({
   imports: [
@@ -17,7 +19,11 @@ import { AdminCompetitionListComponent } from './admin-dashboard/admin-competiti
   ],
   declarations: [
     AdminDashboardComponent,
-    AdminCompetitionListComponent
+    AdminCompetitionListComponent,
+    CompetitionNewComponent
+  ],
+  providers: [
+    AdminService
   ]
 })
 export class AdminModule { }

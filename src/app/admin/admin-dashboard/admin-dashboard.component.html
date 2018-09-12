@@ -1,20 +1,20 @@
 <mat-toolbar>
-    <span>Admin Dashboard</span>
-  </mat-toolbar>
+  <span>Admin Dashboard</span>
+</mat-toolbar>
 
-  <mat-divider></mat-divider>
+<mat-divider></mat-divider>
 
-  <div class="flex-container content-area" fxLayout.gt-sm="row" fxLayoutGap="15px" fxLayout="space-between" fxLayout="column" fxLayoutAlign="start">
-    <div class="" fxFlex="50">
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <h3 class="mat-card-outer-title">Competitions</h3>
-        <span class="spacer"></span>
-        <button class="mat-card-outer-title" mat-icon-button matTooltip="Add Competition">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-      <mat-card class="mat-card-list">
-        <admin-competition-list [competitions]="competitions"></admin-competition-list>
-      </mat-card>
+<div class="flex-container content-area" fxLayout.gt-sm="row" fxLayoutGap="15px" fxLayout="space-between" fxLayout="column" fxLayoutAlign="start">
+  <div class="" fxFlex="50">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <h3 class="mat-card-outer-title">Competitions</h3>
+      <span class="spacer"></span>
+      <button class="mat-card-outer-title" mat-icon-button matTooltip="Add Competition" (click)="createCompetition()">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
+    <mat-card class="mat-card-list">
+      <admin-competition-list [competitions]="competitions"></admin-competition-list>
+    </mat-card>
   </div>
+</div>
