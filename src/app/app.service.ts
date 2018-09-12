@@ -35,4 +35,14 @@ export class AppService {
     return {height, width, maxHeight, maxWidth};
   }
 
+  public async getFixtureTypes() {
+    return {
+      league: 'League'
+    }
+  }
+
+  public async getFixtureTypeStrings() {
+    return ['League']
+  }
+
 }

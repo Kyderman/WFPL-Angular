@@ -1,0 +1,58 @@
+<mat-toolbar>
+    <span>{{competition.name}} Dashboard</span>
+</mat-toolbar>
+
+<mat-divider></mat-divider>
+
+<div class="flex-container content-area" fxLayout.gt-sm="row" fxLayoutGap="15px" fxLayout="space-between" fxLayout="column" fxLayoutAlign="start">
+  <div class="" fxFlex="33">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <h3 class="mat-card-outer-title">Information</h3>
+      <span class="spacer"></span>
+      <button class="mat-card-outer-title" mat-icon-button matTooltip="Edit Details">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+    <mat-card class="mat-card-list">
+      <mat-nav-list>
+        <mat-list-item>
+          <mat-icon mat-list-icon>done</mat-icon>
+          <h3 mat-line>{{competition.name}}</h3>
+          <p mat-line> Name </p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>done</mat-icon>
+          <h3 mat-line>{{competition.currentGameweek}}</h3>
+          <p mat-line>Current Gameweek</p>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>done</mat-icon>
+          <h3 mat-line>{{competition.currentSeason}}</h3>
+          <p mat-line>Current Season</p>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-card>
+  </div>
+
+  <div class="" fxFlex="33">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <h3 class="mat-card-outer-title">Clubs</h3>
+        <span class="spacer"></span>
+        <button class="mat-card-outer-title" mat-icon-button matTooltip="Add Clubs" (click)="addClub()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <mat-card class="mat-card-list">
+        <mat-nav-list>
+          <mat-list-item *ngIf="teams.length === 0">
+            <mat-icon color="warn" mat-list-icon>error</mat-icon>
+            <h3 mat-line>No clubs available</h3>
+          </mat-list-item>
+          <mat-list-item *ngFor="let team of teams" (click)="goToTeam(team)">
+            <mat-icon mat-list-icon>done</mat-icon>
+            <h3 mat-line>{{team.name}}</h3>
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-card>
+    </div>
+</div>

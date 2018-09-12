@@ -3,6 +3,7 @@ import { CompetitionForm } from '../competition-form';
 import { FormBuilder } from '@angular/forms';
 import { AdminService } from '../../admin/admin.service';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'competition-new',
@@ -19,6 +20,7 @@ export class CompetitionNewComponent implements OnInit {
     public fb: FormBuilder,
     public adminService: AdminService,
     public snackBar: MatSnackBar,
+    public router: Router
   ) {}
 
   public async ngOnInit() {
@@ -31,11 +33,12 @@ export class CompetitionNewComponent implements OnInit {
     try {
       let formResult = await this.competitionForm.submit(this.snackBar);
       if(formResult !== false) {
-        await this.adminService.createCompetition(formResult);
+        let competition = await this.adminService.createCompetition(formResult);
         this.snackBar.open('Competition successfully created', '', {
           duration: 3000
         })
         // relocate to the competition dashboard
+        this.router.navigate(['competitions', competition.id]);
       }
     } catch(err) {
       this.snackBar.open(err, '', {

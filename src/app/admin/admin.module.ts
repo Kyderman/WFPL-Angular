@@ -8,6 +8,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { AdminCompetitionListComponent } from './admin-dashboard/admin-competition-list/admin-competition-list.component';
 import { AdminService } from './admin.service';
 import { CompetitionNewComponent } from '../competition/competition-new/competition-new.component';
+import { TeamNewComponent } from '../team/team-new/team-new.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { CompetitionNewComponent } from '../competition/competition-new/competit
   declarations: [
     AdminDashboardComponent,
     AdminCompetitionListComponent,
-    CompetitionNewComponent
+    CompetitionNewComponent,
+    TeamNewComponent
   ],
   providers: [
     AdminService

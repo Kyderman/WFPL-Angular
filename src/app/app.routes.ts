@@ -17,5 +17,13 @@ export const ROUTES: Routes = [
     loadChildren: './admin/admin.module#AdminModule',
     canActivate: [AuthorizationGuard],
     data: {roles: ['Admin']}
+  },
+  {
+    path: 'competitions',
+    loadChildren: './competition/competition.module#CompetitionModule',
+  },
+  {
+    path: 'clubs',
+    loadChildren: './team/team.module#TeamModule',
   }
 ];

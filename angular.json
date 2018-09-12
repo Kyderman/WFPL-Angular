@@ -132,5 +132,10 @@
       }
     }
   },
-  "defaultProject": "wfplAngular"
+  "defaultProject": "wfplAngular",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
