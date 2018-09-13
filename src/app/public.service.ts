@@ -81,5 +81,16 @@ export class PublicService {
     }
   }
 
+  public async getPlayer(id: number): Promise<Player> {
+    try {
+      let response = await this.http.get(
+        `${environment.apiUrl}public/players/${id}`
+      ).toPromise();
+      return this.playerBuilder.create(response['data']['player']);
+    } catch (err) {
+      return Promise.reject(Error('There was a problem retrieving player.'));
+    }
+  }
+
 
 }

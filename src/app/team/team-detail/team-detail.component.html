@@ -48,7 +48,7 @@
             <mat-icon color="warn" mat-list-icon>error</mat-icon>
             <h3 mat-line>No players available</h3>
           </mat-list-item>
-          <mat-list-item *ngFor="let player of players">
+          <mat-list-item *ngFor="let player of players" (click)="goToPlayer(player)">
             <mat-icon mat-list-icon>done</mat-icon>
             <h3 mat-line>{{player.firstName}} {{player.lastName}}</h3>
           </mat-list-item>

@@ -25,5 +25,9 @@ export const ROUTES: Routes = [
   {
     path: 'clubs',
     loadChildren: './team/team.module#TeamModule',
+  },
+  {
+    path: 'players',
+    loadChildren: './player/player.module#PlayerModule',
   }
 ];

@@ -5,6 +5,7 @@ import { AdminService } from '../../admin/admin.service';
 import { MatSnackBar } from '@angular/material';
 import { AppService } from '../../app.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'team-new',
@@ -26,7 +27,8 @@ export class TeamNewComponent implements OnInit {
     public snackBar: MatSnackBar,
     public appService: AppService,
     public route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    public location: Location
   ) {}
 
   public async ngOnInit() {
@@ -58,6 +60,10 @@ export class TeamNewComponent implements OnInit {
       this.isLoading = false;
     }
 
+  }
+
+  public onCancel() {
+    this.location.back();
   }
 
 }

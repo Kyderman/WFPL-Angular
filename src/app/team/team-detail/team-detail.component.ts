@@ -31,4 +31,8 @@ export class TeamDetailComponent implements OnInit {
     this.router.navigate(['admin/clubs', this.team.id, 'players', 'new']);
   }
 
+  public async goToPlayer(player: Player) {
+    this.router.navigate(['players', player.id]);
+  }
+
 }

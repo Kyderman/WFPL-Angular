@@ -1,7 +1,10 @@
 <mat-toolbar>
   <span>New Competition</span>
   <span class="spacer"></span>
-  <button mat-flat-button color="primary" (click)="onSubmit()">CREATE</button>
+  <div class="button-row">
+    <button mat-flat-button color="primary" (click)="onSubmit()">CREATE</button>
+    <button mat-stroked-button color="warn" (click)="onCancel()">CANCEL</button>
+  </div>
 </mat-toolbar>
 
 <mat-divider></mat-divider>
