@@ -42,7 +42,7 @@ export class AppService {
   }
 
   public async getFixtureTypeStrings() {
-    return ['League']
+    return ['League'];
   }
 
 }

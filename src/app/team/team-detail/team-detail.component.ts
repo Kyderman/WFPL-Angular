@@ -23,12 +23,12 @@ export class TeamDetailComponent implements OnInit {
   public async ngOnInit() {
     this.route.params.subscribe(async (p) => {
       this.team = await this.publicService.getTeam(p.id);
-      // this.teams = await this.publicService.getCompetitionTeams(p.id)
+      this.players = await this.publicService.getTeamPlayers(this.team.id);
     })
   }
 
   public async addPlayer() {
-    // this.router.navigate(['admin/competitions', this.competition.id, 'clubs', 'new']);
+    this.router.navigate(['admin/clubs', this.team.id, 'players', 'new']);
   }
 
 }

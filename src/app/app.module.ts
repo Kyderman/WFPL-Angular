@@ -28,6 +28,7 @@ import { UserBuilder } from './user/user.builder';
 import { PublicService } from './public.service';
 import { CompetitionBuilder } from './competition/competition.builder';
 import { TeamBuilder } from './team/team.builder';
+import { PlayerBuilder } from './player/player.builder';
 
 export function getJwtToken(): string {
   return localStorage.getItem('access_token');
@@ -75,7 +76,8 @@ export function getJwtToken(): string {
     UserBuilder,
     PublicService,
     CompetitionBuilder,
-    TeamBuilder
+    TeamBuilder,
+    PlayerBuilder
   ],
   bootstrap: [
     AppComponent,

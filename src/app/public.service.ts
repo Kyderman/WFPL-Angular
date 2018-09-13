@@ -7,6 +7,8 @@ import { CompetitionBuilder } from './competition/competition.builder';
 import { Competition } from './competition/competition';
 import { TeamBuilder } from './team/team.builder';
 import { Team } from './team/team';
+import { Player } from './player/player';
+import { PlayerBuilder } from './player/player.builder';
 
 @Injectable()
 export class PublicService {
@@ -14,7 +16,8 @@ export class PublicService {
   constructor(
     private http: HttpClient,
     private competitionBuilder: CompetitionBuilder,
-    private teamBuilder: TeamBuilder
+    private teamBuilder: TeamBuilder,
+    private playerBuilder: PlayerBuilder
   ) {}
 
   public async getAllCompetitions(): Promise<Competition[]> {
@@ -62,6 +65,19 @@ export class PublicService {
       return this.teamBuilder.create(response['data']['team']);
     } catch (err) {
       return Promise.reject(Error('There was a problem retrieving club.'));
+    }
+  }
+
+  public async getTeamPlayers(id: number): Promise<Player[]> {
+    try {
+      let response = await this.http.get(
+        `${environment.apiUrl}public/teams/${id}/players`
+      ).toPromise();
+      return await Bluebird.map(response['data']['players'], async (p) => {
+        return this.playerBuilder.create(p);
+      })
+    } catch (err) {
+      return Promise.reject(Error('There was a problem retrieving players.'));
     }
   }
 

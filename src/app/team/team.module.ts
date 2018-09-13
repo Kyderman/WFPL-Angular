@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
 import { TeamRoutingModule } from './team-routing.module';
+import { PlayerNewComponent } from '../player/player-new/player-new.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { TeamRoutingModule } from './team-routing.module';
     ReactiveFormsModule
   ],
   declarations: [
-    TeamDetailComponent
+    TeamDetailComponent,
   ],
   providers: [
   ]

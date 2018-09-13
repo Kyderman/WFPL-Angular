@@ -1,31 +1,31 @@
 <mat-toolbar>
-    <span>New Club</span>
-    <span class="spacer"></span>
-    <button mat-flat-button color="primary" (click)="onSubmit()">CREATE</button>
-  </mat-toolbar>
+  <span>New Club</span>
+  <span class="spacer"></span>
+  <button mat-flat-button color="primary" (click)="onSubmit()">CREATE</button>
+</mat-toolbar>
 
-  <mat-divider></mat-divider>
+<mat-divider></mat-divider>
 
-  <div>
-    <mat-card fxFlexOffset.gt-sm="33" fxFlex.gt-sm="33">
-      <form [formGroup]="teamForm.form">
-        <mat-form-field class="full-width">
-          <input formControlName="name" matInput placeholder="Name" required>
-          <mat-error *ngFor="let error of teamForm.formErrors.name">
-            {{error}}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="full-width">
-          <mat-select formControlName="fixtureType" placeholder="Fixture Type" required>
-            <mat-option *ngFor="let type of fixtureTypes" [value]="type">
-              {{type}}
-            </mat-option>
-          </mat-select>
-          <!-- <input formControlName="fixtureType" matInput placeholder="Fixture Type" required> -->
-          <mat-error *ngFor="let error of teamForm.formErrors.fixtureType">
-            {{error}}
-          </mat-error>
-        </mat-form-field>
-      </form>
-    </mat-card>
-  </div>
+<div>
+  <mat-card fxFlexOffset.gt-sm="33" fxFlex.gt-sm="33">
+    <form [formGroup]="teamForm.form">
+      <mat-form-field class="full-width">
+        <input formControlName="name" matInput placeholder="Name" required>
+        <mat-error *ngFor="let error of teamForm.formErrors.name">
+          {{error}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-select formControlName="fixtureType" placeholder="Fixture Type" required>
+          <mat-option *ngFor="let type of fixtureTypes" [value]="type">
+            {{type}}
+          </mat-option>
+        </mat-select>
+        <!-- <input formControlName="fixtureType" matInput placeholder="Fixture Type" required> -->
+        <mat-error *ngFor="let error of teamForm.formErrors.fixtureType">
+          {{error}}
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card>
+</div>
