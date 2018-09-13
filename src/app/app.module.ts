@@ -29,6 +29,8 @@ import { PublicService } from './public.service';
 import { CompetitionBuilder } from './competition/competition.builder';
 import { TeamBuilder } from './team/team.builder';
 import { PlayerBuilder } from './player/player.builder';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MatMomentDateModule } from '@angular/material-moment-adapter';
 
 export function getJwtToken(): string {
   return localStorage.getItem('access_token');
@@ -77,7 +79,10 @@ export function getJwtToken(): string {
     PublicService,
     CompetitionBuilder,
     TeamBuilder,
-    PlayerBuilder
+    PlayerBuilder,
+    MomentDateAdapter, MatMomentDateModule,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter }
   ],
   bootstrap: [
     AppComponent,

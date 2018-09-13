@@ -10,6 +10,7 @@ import { AdminService } from './admin.service';
 import { CompetitionNewComponent } from '../competition/competition-new/competition-new.component';
 import { TeamNewComponent } from '../team/team-new/team-new.component';
 import { PlayerNewComponent } from '../player/player-new/player-new.component';
+import { FixtureCreationFormComponent } from '../fixture/fixture-creation-form/fixture-creation-form.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { PlayerNewComponent } from '../player/player-new/player-new.component';
     AdminCompetitionListComponent,
     CompetitionNewComponent,
     TeamNewComponent,
-    PlayerNewComponent
+    PlayerNewComponent,
+    FixtureCreationFormComponent
   ],
   providers: [
     AdminService

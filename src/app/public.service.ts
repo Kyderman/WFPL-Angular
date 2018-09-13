@@ -92,5 +92,18 @@ export class PublicService {
     }
   }
 
+  public async lookupTeams(name: string, limit: number): Promise<Team[]> {
+    try {
+      let response = await this.http.get(
+        `${environment.apiUrl}public/lookup/teams?name=${name}&limit=${limit}`
+      ).toPromise();
+      return await Bluebird.map(response['data']['teams'], async (t) => {
+        return this.teamBuilder.create(t);
+      })
+    } catch (err) {
+      return Promise.reject(Error('There was a problem retrieving teams.'));
+    }
+  }
+
 
 }

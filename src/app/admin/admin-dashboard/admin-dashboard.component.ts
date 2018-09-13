@@ -25,4 +25,8 @@ export class AdminDashboardComponent implements OnInit {
     this.router.navigateByUrl('admin/competitions/new');
   }
 
+  public async addFixtures() {
+    this.router.navigateByUrl('admin/fixtures/new');
+  }
+
 }

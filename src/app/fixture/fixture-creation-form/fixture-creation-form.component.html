@@ -1,0 +1,64 @@
+<mat-toolbar>
+  <span>New Fixture</span>
+  <span class="spacer"></span>
+  <div class="button-row">
+    <button mat-flat-button color="primary" (click)="onSubmit()">CREATE</button>
+    <button mat-stroked-button color="warn" (click)="onCancel()">CANCEL</button>
+  </div>
+</mat-toolbar>
+
+<mat-divider></mat-divider>
+
+<div class="flex-container content-area" fxLayout.gt-sm="row" fxLayoutGap="15px" fxLayout="space-between" fxLayout="column" fxLayoutAlign="start">
+  <div class="" fxFlex="33">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <h3 class="mat-card-outer-title">Fixture information</h3>
+    </div>
+    <mat-card>
+      <form [formGroup]="fixtureForm.form">
+        <mat-form-field class="full-width">
+          <input formControlName="fixtureDate" matInput placeholder="Date" required [matDatepicker]="myDatepicker">
+          <!-- <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle> -->
+          <mat-datepicker #myDatepicker></mat-datepicker>
+          <mat-error *ngFor="let error of fixtureForm.formErrors.fixtureDate">
+            {{error}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-select formControlName="fixtureType" placeholder="Fixture Type" required>
+            <mat-option *ngFor="let type of fixtureTypes" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngFor="let error of fixtureForm.formErrors.fixtureType">
+            {{error}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput formControlName="homeTeamId" placeholder="Home Team" required [matAutocomplete]="autoHomeTeam">
+          <mat-autocomplete #autoHomeTeam="matAutocomplete" [displayWith]="teamDisplay">
+            <mat-option *ngFor="let t of filteredTeams | async" [value]="t">
+              {{t.name}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngFor="let error of fixtureForm.formErrors.homeTeamId">
+            {{error}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput formControlName="awayTeamId" placeholder="Away Team" required [matAutocomplete]="autoAwayTeam">
+          <mat-autocomplete #autoAwayTeam="matAutocomplete" [displayWith]="teamDisplay">
+            <mat-option *ngFor="let t of filteredTeams | async" [value]="t">
+              {{t.name}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngFor="let error of fixtureForm.formErrors.awayTeamId">
+            {{error}}
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-card>
+  </div>
+</div>
+

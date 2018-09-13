@@ -4,6 +4,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { CompetitionNewComponent } from '../competition/competition-new/competition-new.component';
 import { TeamNewComponent } from '../team/team-new/team-new.component';
 import { PlayerNewComponent } from '../player/player-new/player-new.component';
+import { FixtureCreationFormComponent } from '../fixture/fixture-creation-form/fixture-creation-form.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'clubs/:id/players/new',
     component: PlayerNewComponent
+  },
+  {
+    path: 'fixtures/new',
+    component: FixtureCreationFormComponent
   }
 ];
 
