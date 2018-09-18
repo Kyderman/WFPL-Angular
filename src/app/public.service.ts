@@ -10,6 +10,7 @@ import { Team } from './team/team';
 import { Player } from './player/player';
 import { PlayerBuilder } from './player/player.builder';
 import { GameweekBuilder } from './gameweek/gameweek.builder';
+import { Gameweek } from './gameweek/gameweek';
 
 @Injectable()
 export class PublicService {
@@ -119,16 +120,16 @@ export class PublicService {
     }
   }
 
-  public async lookupCompetitionGameweeks(name: string, competitionId, limit: number): Promise<Competition[]> {
+  public async lookupCompetitionGameweeks(name: string, competitionId: number, minimumSeason: number, limit: number): Promise<Gameweek[]> {
     try {
       let response = await this.http.get(
-        `${environment.apiUrl}public/lookup/competitions/${competitionId}/gameweeks?name=${name}&limit=${limit}`
+        `${environment.apiUrl}public/lookup/competitions/${competitionId}/gameweeks?name=${name}&limit=${limit}&minimumSeason=${minimumSeason}`
       ).toPromise();
       return await Bluebird.map(response['data']['gameweeks'], async (g) => {
         return this.gameweekBuilder.create(g);
       })
     } catch (err) {
-      return Promise.reject(Error('There was a problem retrieving competitions.'));
+      return Promise.reject(Error('There was a problem retrieving gameweeks.'));
     }
   }
 

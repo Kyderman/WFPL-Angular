@@ -66,12 +66,14 @@ export class FixtureCreationFormComponent implements OnInit {
       .subscribe(async (value) => {
         if (value === '') {
           value = null;
-        } else if (value instanceof Competition) {
+        } else if (value instanceof Gameweek) {
           // this.selectedCompetition = value;
+          return;
+        } else if (/^\+?(0|[1-9]\d*)$/.test(value) === false) {
           return;
         }
 
-        const gameweeks = await this.publicService.lookupCompetitionGameweeks(value, this.selectedCompetition.id, 5);
+        const gameweeks = await this.publicService.lookupCompetitionGameweeks(value, this.selectedCompetition.id, this.selectedCompetition.currentSeason, 5);
         // if (this.existingPersonnelList.length !== 0) {
         //   r.users = await Bluebird.filter(r.users, async (p) => {
         //     return await this.existingPersonnelList.some(p2 => p2.id !== p.id);
@@ -162,6 +164,10 @@ export class FixtureCreationFormComponent implements OnInit {
 
   public competitionDisplay(c?: Competition): string | undefined {
     return c ? c.name : undefined;
+  }
+
+  public gameweekDisplay(g?: Gameweek): string | undefined {
+    return g ? 'Week: ' + g.weekNumber + ' - Season: ' + g.season : undefined;
   }
 
 }
