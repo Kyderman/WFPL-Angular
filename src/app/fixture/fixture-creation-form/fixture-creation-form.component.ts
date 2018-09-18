@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FixtureCreationForm } from '../fixture-creation-form';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { AdminService } from '../../admin/admin.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatInput } from '@angular/material';
 import { AppService } from '../../app.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlayerForm } from '../../player/player-form';
@@ -11,6 +11,9 @@ import { debounceTime } from 'rxjs/operators';
 import { PublicService } from '../../public.service';
 import { BehaviorSubject } from 'rxjs';
 import { Team } from '../../team/team';
+import { Competition } from '../../competition/competition';
+import { Gameweek } from '../../gameweek/gameweek';
+import { GameweekForm } from '../../gameweek/gameweek-form';
 
 @Component({
   selector: 'fixture-creation-form',
@@ -25,6 +28,22 @@ export class FixtureCreationFormComponent implements OnInit {
   public fixtureTypes: string[] = [];
 
   public filteredTeams: BehaviorSubject<Team[]> = new BehaviorSubject<Team[]>([]);
+
+  public filteredCompetitions: BehaviorSubject<Competition[]> = new BehaviorSubject<Competition[]>([]);
+  public selectedCompetition: Competition;
+
+  public filteredGameweeks: BehaviorSubject<Gameweek[]> = new BehaviorSubject<Gameweek[]>([]);
+
+  public competitionSelector: FormControl = new FormControl('');
+  public gameweekSelector: FormControl = new FormControl('');
+
+
+  public existingGameweeksList: Gameweek[] = [];
+
+  public gameweekForm: GameweekForm;
+
+  public existingSelectedGameweeks: Gameweek[] = [];
+  public newSelectedGameweeks: Gameweek[] = [];
 
 
   constructor (
@@ -42,6 +61,43 @@ export class FixtureCreationFormComponent implements OnInit {
     console.log('Loaded Player New');
     this.fixtureForm = new FixtureCreationForm(this.fb);
     this.fixtureTypes = await this.appService.getFixtureTypeStrings();
+    this.gameweekSelector.valueChanges.pipe(
+      debounceTime(400))
+      .subscribe(async (value) => {
+        if (value === '') {
+          value = null;
+        } else if (value instanceof Competition) {
+          // this.selectedCompetition = value;
+          return;
+        }
+
+        const gameweeks = await this.publicService.lookupCompetitionGameweeks(value, this.selectedCompetition.id, 5);
+        // if (this.existingPersonnelList.length !== 0) {
+        //   r.users = await Bluebird.filter(r.users, async (p) => {
+        //     return await this.existingPersonnelList.some(p2 => p2.id !== p.id);
+        //   });
+        // }
+        this.filteredGameweeks.next(gameweeks);
+      });
+    this.competitionSelector.valueChanges.pipe(
+      debounceTime(400))
+      .subscribe(async (value) => {
+        this.selectedCompetition = null;
+        if (value === '') {
+          value = null;
+        } else if (value instanceof Competition) {
+          this.selectedCompetition = value;
+          return;
+        }
+
+        const competitions = await this.publicService.lookupCompetitions(value, 5);
+        // if (this.existingPersonnelList.length !== 0) {
+        //   r.users = await Bluebird.filter(r.users, async (p) => {
+        //     return await this.existingPersonnelList.some(p2 => p2.id !== p.id);
+        //   });
+        // }
+        this.filteredCompetitions.next(competitions);
+      });
     this.fixtureForm.form.controls['homeTeamId'].valueChanges.pipe(
       debounceTime(400))
       .subscribe(async (value) => {
@@ -78,6 +134,7 @@ export class FixtureCreationFormComponent implements OnInit {
     try {
       let formResult = await this.fixtureForm.submit(this.snackBar);
       if(formResult !== false) {
+        console.log(formResult);
         // let team = await this.adminService.createTeamPlayers(this.teamId, [formResult]);
         // this.snackBar.open('Player successfully created', '', {
         //   duration: 3000
@@ -101,6 +158,10 @@ export class FixtureCreationFormComponent implements OnInit {
 
   public teamDisplay(t?: Team): string | undefined {
     return t ? t.name : undefined;
+  }
+
+  public competitionDisplay(c?: Competition): string | undefined {
+    return c ? c.name : undefined;
   }
 
 }

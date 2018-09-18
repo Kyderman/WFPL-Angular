@@ -16,7 +16,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ConfirmDialogComponent } from './shared/dialogs/confirm-dialog';
 import { HomeComponent } from './home';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SideNavComponent } from './navigation/side-nav';
 import { TopNavComponent } from './navigation/top-nav';
 import { AuthenticationService } from './authentication/authentication.service';
@@ -66,7 +66,8 @@ export function getJwtToken(): string {
         ]
       }
     }),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     UserService,

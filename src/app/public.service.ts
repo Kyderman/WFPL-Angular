@@ -9,6 +9,7 @@ import { TeamBuilder } from './team/team.builder';
 import { Team } from './team/team';
 import { Player } from './player/player';
 import { PlayerBuilder } from './player/player.builder';
+import { GameweekBuilder } from './gameweek/gameweek.builder';
 
 @Injectable()
 export class PublicService {
@@ -17,7 +18,8 @@ export class PublicService {
     private http: HttpClient,
     private competitionBuilder: CompetitionBuilder,
     private teamBuilder: TeamBuilder,
-    private playerBuilder: PlayerBuilder
+    private playerBuilder: PlayerBuilder,
+    private gameweekBuilder: GameweekBuilder
   ) {}
 
   public async getAllCompetitions(): Promise<Competition[]> {
@@ -102,6 +104,31 @@ export class PublicService {
       })
     } catch (err) {
       return Promise.reject(Error('There was a problem retrieving teams.'));
+    }
+  }
+  public async lookupCompetitions(name: string, limit: number): Promise<Competition[]> {
+    try {
+      let response = await this.http.get(
+        `${environment.apiUrl}public/lookup/competitions?name=${name}&limit=${limit}`
+      ).toPromise();
+      return await Bluebird.map(response['data']['competitions'], async (c) => {
+        return this.competitionBuilder.create(c);
+      })
+    } catch (err) {
+      return Promise.reject(Error('There was a problem retrieving competitions.'));
+    }
+  }
+
+  public async lookupCompetitionGameweeks(name: string, competitionId, limit: number): Promise<Competition[]> {
+    try {
+      let response = await this.http.get(
+        `${environment.apiUrl}public/lookup/competitions/${competitionId}/gameweeks?name=${name}&limit=${limit}`
+      ).toPromise();
+      return await Bluebird.map(response['data']['gameweeks'], async (g) => {
+        return this.gameweekBuilder.create(g);
+      })
+    } catch (err) {
+      return Promise.reject(Error('There was a problem retrieving competitions.'));
     }
   }
 

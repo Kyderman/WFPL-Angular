@@ -1,4 +1,4 @@
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './../material.module';
 import { NgModule } from '@angular/core';
@@ -18,7 +18,8 @@ import { FixtureCreationFormComponent } from '../fixture/fixture-creation-form/f
     AdminRoutingModule,
     MaterialModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   declarations: [
     AdminDashboardComponent,
