@@ -77,7 +77,50 @@
         <br>
         <mat-divider></mat-divider>
         <br>
+        <div *ngIf="matchingCompetitionGameweek != null">
+          <h3>A gameweek for this competition matches the entered fixture date</h3>
+          <p>Gameweek: {{matchingCompetitionGameweek.weekNumber}}</p>
+          <p>Season: {{matchingCompetitionGameweek.season}}</p>
+          <p>Start date: {{matchingCompetitionGameweek.startDate | date}}</p>
+          <p>End date: {{matchingCompetitionGameweek.endDate | date}}</p>
+        </div>
+        <div *ngIf="matchingCompetitionGameweek == null">
+          <h3>No matching gameweek found for the entered fixture date</h3>
+          <p>Please create a new gameweek for this competition</p>
 
+          <form [formGroup]="gameweekForm.form">
+            <mat-form-field class="full-width">
+              <input formControlName="weekNumber" matInput placeholder="Gameweek number" required number>
+              <mat-error *ngFor="let error of gameweekForm.formErrors.weekNumber">
+                {{error}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input formControlName="season" matInput placeholder="Season number" required number>
+              <mat-error *ngFor="let error of gameweekForm.formErrors.season">
+                {{error}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input formControlName="startDate" matInput placeholder="Start date" required [matDatepicker]="startDatePicker">
+              <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #startDatePicker></mat-datepicker>
+              <mat-error *ngFor="let error of gameweekForm.formErrors.startDate">
+                {{error}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input formControlName="endDate" matInput placeholder="End date" required [matDatepicker]="endDatePicker">
+              <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #endDatePicker></mat-datepicker>
+              <mat-error *ngFor="let error of gameweekForm.formErrors.endDate">
+                {{error}}
+              </mat-error>
+            </mat-form-field>
+          
+          
+          </form>
+        </div>
       </div>
 
     </mat-card>

@@ -6,7 +6,7 @@ import { MatSnackBar, MatInput } from '@angular/material';
 import { AppService } from '../../app.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlayerForm } from '../../player/player-form';
-import { Location } from '@angular/common';
+import { Location, NgIfContext } from '@angular/common';
 import { debounceTime } from 'rxjs/operators';
 import { PublicService } from '../../public.service';
 import { BehaviorSubject } from 'rxjs';
@@ -32,7 +32,7 @@ export class FixtureCreationFormComponent implements OnInit {
   public filteredCompetitions: BehaviorSubject<Competition[]> = new BehaviorSubject<Competition[]>([]);
   public selectedCompetition: Competition;
 
-  public competitionSelector: FormControl = new FormControl('');
+  public competitionSelector: FormControl = new FormControl({value: '', disabled: true});
 
   public matchingCompetitonGameweek: Gameweek;
 
@@ -58,8 +58,27 @@ export class FixtureCreationFormComponent implements OnInit {
 
   public async ngOnInit() {
     console.log('Loaded Player New');
+    this
     this.fixtureForm = new FixtureCreationForm(this.fb);
+    this.gameweekForm = new GameweekForm(this.fb);
     this.fixtureTypes = await this.appService.getFixtureTypeStrings();
+
+    this.fixtureForm.form.valueChanges.pipe(
+      debounceTime(400))
+      .subscribe(async (val) => {
+        this.fixtureForm.form.valid ? this.competitionSelector.enable() : this.competitionSelector.disable();
+      })
+
+    this.fixtureForm.form.controls['fixtureDate'].valueChanges.pipe(
+      debounceTime(400))
+      .subscribe(async (value) => {
+        if(this.selectedCompetition != null && value != '') {
+          this.matchingCompetitonGameweek = await this.publicService.lookupCompetitionGameweeks(
+            this.selectedCompetition.id,
+            new Date(value));
+          return;
+        }
+      });
     
     this.competitionSelector.valueChanges.pipe(
       debounceTime(400))
@@ -69,8 +88,10 @@ export class FixtureCreationFormComponent implements OnInit {
           value = null;
         } else if (value instanceof Competition) {
           this.selectedCompetition = value;
-          this.matchingCompetitonGameweek = await this.publicService.lookupCompetitionGameweeks(this.selectedCompetition.id, new Date(this.fixtureForm.form.controls['fixtureDate'].value))
-          console.log(this.matchingCompetitonGameweek)
+          this.matchingCompetitonGameweek = await this.publicService.lookupCompetitionGameweeks(
+            this.selectedCompetition.id,
+            new Date(this.fixtureForm.form.controls['fixtureDate'].value
+          ));
           return;
         }
 
