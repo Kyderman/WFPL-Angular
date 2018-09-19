@@ -32,10 +32,9 @@ export class FixtureCreationFormComponent implements OnInit {
   public filteredCompetitions: BehaviorSubject<Competition[]> = new BehaviorSubject<Competition[]>([]);
   public selectedCompetition: Competition;
 
-  public filteredGameweeks: BehaviorSubject<Gameweek[]> = new BehaviorSubject<Gameweek[]>([]);
-
   public competitionSelector: FormControl = new FormControl('');
-  public gameweekSelector: FormControl = new FormControl('');
+
+  public matchingCompetitonGameweek: Gameweek;
 
 
   public existingGameweeksList: Gameweek[] = [];
@@ -61,26 +60,7 @@ export class FixtureCreationFormComponent implements OnInit {
     console.log('Loaded Player New');
     this.fixtureForm = new FixtureCreationForm(this.fb);
     this.fixtureTypes = await this.appService.getFixtureTypeStrings();
-    this.gameweekSelector.valueChanges.pipe(
-      debounceTime(400))
-      .subscribe(async (value) => {
-        if (value === '') {
-          value = null;
-        } else if (value instanceof Gameweek) {
-          // this.selectedCompetition = value;
-          return;
-        } else if (/^\+?(0|[1-9]\d*)$/.test(value) === false) {
-          return;
-        }
-
-        const gameweeks = await this.publicService.lookupCompetitionGameweeks(value, this.selectedCompetition.id, this.selectedCompetition.currentSeason, 5);
-        // if (this.existingPersonnelList.length !== 0) {
-        //   r.users = await Bluebird.filter(r.users, async (p) => {
-        //     return await this.existingPersonnelList.some(p2 => p2.id !== p.id);
-        //   });
-        // }
-        this.filteredGameweeks.next(gameweeks);
-      });
+    
     this.competitionSelector.valueChanges.pipe(
       debounceTime(400))
       .subscribe(async (value) => {
@@ -89,6 +69,8 @@ export class FixtureCreationFormComponent implements OnInit {
           value = null;
         } else if (value instanceof Competition) {
           this.selectedCompetition = value;
+          this.matchingCompetitonGameweek = await this.publicService.lookupCompetitionGameweeks(this.selectedCompetition.id, new Date(this.fixtureForm.form.controls['fixtureDate'].value))
+          console.log(this.matchingCompetitonGameweek)
           return;
         }
 
@@ -164,10 +146,6 @@ export class FixtureCreationFormComponent implements OnInit {
 
   public competitionDisplay(c?: Competition): string | undefined {
     return c ? c.name : undefined;
-  }
-
-  public gameweekDisplay(g?: Gameweek): string | undefined {
-    return g ? 'Week: ' + g.weekNumber + ' - Season: ' + g.season : undefined;
   }
 
 }

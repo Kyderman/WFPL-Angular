@@ -77,14 +77,6 @@
         <br>
         <mat-divider></mat-divider>
         <br>
-        <mat-form-field class="full-width">
-          <input matInput [formControl]="gameweekSelector" placeholder="Select an existing gameweek" required [matAutocomplete]="autoGameweek">
-          <mat-autocomplete #autoGameweek="matAutocomplete" [displayWith]="gameweekDisplay">
-            <mat-option *ngFor="let g of filteredGameweeks | async" [value]="g">
-              {{ 'Week: ' + g.weekNumber + ' - Season: ' + g.season }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
 
       </div>
 

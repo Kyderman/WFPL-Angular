@@ -120,16 +120,15 @@ export class PublicService {
     }
   }
 
-  public async lookupCompetitionGameweeks(name: string, competitionId: number, minimumSeason: number, limit: number): Promise<Gameweek[]> {
+  public async lookupCompetitionGameweeks(competitionId: number, containsDate: Date): Promise<Gameweek> {
     try {
       let response = await this.http.get(
-        `${environment.apiUrl}public/lookup/competitions/${competitionId}/gameweeks?name=${name}&limit=${limit}&minimumSeason=${minimumSeason}`
+        `${environment.apiUrl}public/lookup/competitions/${competitionId}/gameweeks?containsDate=${containsDate}`
       ).toPromise();
-      return await Bluebird.map(response['data']['gameweeks'], async (g) => {
-        return this.gameweekBuilder.create(g);
-      })
+      if(response['data']['gameweek'] === null) { return null }
+      return this.gameweekBuilder.create(response['data']['gameweek']);
     } catch (err) {
-      return Promise.reject(Error('There was a problem retrieving gameweeks.'));
+      return Promise.reject(Error('There was a problem retrieving gameweek'));
     }
   }
 
