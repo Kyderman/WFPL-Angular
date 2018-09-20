@@ -62,7 +62,24 @@
   </div>
   <div class="" fxFlex="66">
     <div fxLayout="row" fxLayoutAlign="start center">
-      <h3 class="mat-card-outer-title">Gameweek information</h3>
+      <h3 class="mat-card-outer-title">Fixture Gameweeks</h3>
+    </div>
+    <mat-card class="mat-card-list">
+      <mat-list>
+        <mat-list-item *ngFor="let eg of existingSelectedGameweeks">
+          <h3 mat-line>{{eg.competition.name}}</h3>
+          <p mat-line>Gameweek: {{eg.weekNumber}} - Season: {{eg.season}}</p>
+          <p mat-line>{{eg.startDate | date}} - {{eg.endDate | date}}</p>
+        </mat-list-item>
+        <mat-list-item *ngFor="let g of newSelectedGameweeks">
+          <h3 mat-line>{{g.competition.name}}</h3>
+          <p mat-line>Gameweek: {{g.weekNumber}} - Season: {{g.season}}</p>
+          <p mat-line>{{g.startDate | date}} - {{g.endDate | date}}</p>
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <h3 class="mat-card-outer-title">Add new or existing</h3>
     </div>
     <mat-card>
       <mat-form-field class="full-width">
@@ -83,6 +100,7 @@
           <p>Season: {{matchingCompetitionGameweek.season}}</p>
           <p>Start date: {{matchingCompetitionGameweek.startDate | date}}</p>
           <p>End date: {{matchingCompetitionGameweek.endDate | date}}</p>
+          <button mat-stroked-button color="primary" (click)="addExistingGameweek()">ADD</button>
         </div>
         <div *ngIf="matchingCompetitionGameweek == null">
           <h3>No matching gameweek found for the entered fixture date</h3>
@@ -117,8 +135,7 @@
                 {{error}}
               </mat-error>
             </mat-form-field>
-          
-          
+            <button mat-stroked-button color="primary" (click)="addNewGameweek()">ADD</button>
           </form>
         </div>
       </div>

@@ -1,3 +1,5 @@
+import { Competition } from "../competition/competition";
+
 export class Gameweek {
 
   public id: number = null;
@@ -8,6 +10,7 @@ export class Gameweek {
   public endDate: Date = null;
   public createdAt: Date = null;
   public updatedAt: Date = null;
+  public competition: Competition = null;
 
   constructor(data: any) {
     this.id = data.id;

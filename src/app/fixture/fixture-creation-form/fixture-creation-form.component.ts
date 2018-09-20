@@ -14,6 +14,7 @@ import { Team } from '../../team/team';
 import { Competition } from '../../competition/competition';
 import { Gameweek } from '../../gameweek/gameweek';
 import { GameweekForm } from '../../gameweek/gameweek-form';
+import { GameweekBuilder } from '../../gameweek/gameweek.builder';
 
 @Component({
   selector: 'fixture-creation-form',
@@ -53,7 +54,8 @@ export class FixtureCreationFormComponent implements OnInit {
     public route: ActivatedRoute,
     public router: Router,
     public location: Location,
-    public publicService: PublicService
+    public publicService: PublicService,
+    public gameweekBuilder: GameweekBuilder
   ) {}
 
   public async ngOnInit() {
@@ -154,6 +156,29 @@ export class FixtureCreationFormComponent implements OnInit {
     } finally {
       this.isLoading = false;
     }
+
+  }
+
+  public async addNewGameweek() {
+    try {
+      let formResult = await this.gameweekForm.submit(this.snackBar);
+      if (formResult !== false) {
+        console.log(formResult)
+        let newGameweek = await this.gameweekBuilder.create(formResult);
+        console.log(newGameweek)
+        newGameweek.competition = this.selectedCompetition;
+        this.newSelectedGameweeks.push(newGameweek);
+        this.snackBar.open('Gameweek successfully added', '', {
+           duration: 3000
+        });
+        this.gameweekForm.form.reset();
+      }
+    } catch(err) {
+
+    }
+  }
+
+  public async addExistingGameweek() {
 
   }
 
