@@ -16,6 +16,8 @@ import { Gameweek } from '../../gameweek/gameweek';
 import { GameweekForm } from '../../gameweek/gameweek-form';
 import { GameweekBuilder } from '../../gameweek/gameweek.builder';
 
+import * as Bluebird from 'bluebird';
+
 @Component({
   selector: 'fixture-creation-form',
   templateUrl: './fixture-creation-form.component.html',
@@ -81,7 +83,7 @@ export class FixtureCreationFormComponent implements OnInit {
           return;
         }
       });
-    
+
     this.competitionSelector.valueChanges.pipe(
       debounceTime(400))
       .subscribe(async (value) => {
@@ -98,11 +100,6 @@ export class FixtureCreationFormComponent implements OnInit {
         }
 
         const competitions = await this.publicService.lookupCompetitions(value, 5);
-        // if (this.existingPersonnelList.length !== 0) {
-        //   r.users = await Bluebird.filter(r.users, async (p) => {
-        //     return await this.existingPersonnelList.some(p2 => p2.id !== p.id);
-        //   });
-        // }
         this.filteredCompetitions.next(competitions);
       });
     this.fixtureForm.form.controls['homeTeamId'].valueChanges.pipe(
@@ -112,11 +109,6 @@ export class FixtureCreationFormComponent implements OnInit {
           value = null;
         }
         const teams = await this.publicService.lookupTeams(value, 5);
-        // if (this.existingPersonnelList.length !== 0) {
-        //   r.users = await Bluebird.filter(r.users, async (p) => {
-        //     return await this.existingPersonnelList.some(p2 => p2.id !== p.id);
-        //   });
-        // }
         this.filteredTeams.next(teams);
       });
 
@@ -127,11 +119,6 @@ export class FixtureCreationFormComponent implements OnInit {
           value = null;
         }
         const teams = await this.publicService.lookupTeams(value, 5);
-        // if (this.existingPersonnelList.length !== 0) {
-        //   r.users = await Bluebird.filter(r.users, async (p) => {
-        //     return await this.existingPersonnelList.some(p2 => p2.id !== p.id);
-        //   });
-        // }
         this.filteredTeams.next(teams);
       });
   }
@@ -141,13 +128,26 @@ export class FixtureCreationFormComponent implements OnInit {
     try {
       let formResult = await this.fixtureForm.submit(this.snackBar);
       if(formResult !== false) {
-        console.log(formResult);
-        // let team = await this.adminService.createTeamPlayers(this.teamId, [formResult]);
-        // this.snackBar.open('Player successfully created', '', {
-        //   duration: 3000
-        // })
-        // // relocate to the team dashboard
-        // this.router.navigate(['clubs', this.teamId]);
+        // map team ids
+        formResult.homeTeamId = formResult.homeTeamId.id;
+        formResult.awayTeamId = formResult.awayTeamId.id;
+        let fixture = formResult;
+
+        let gameweeks = this.existingSelectedGameweeks.concat(this.newSelectedGameweeks);
+        await Bluebird.each(gameweeks, async (g) => {
+          g.competitionId = g.competition.id;
+        })
+        let toSend = {
+          fixture: fixture,
+          gameweeks: gameweeks
+        }
+
+        let fixtureResult = await this.adminService.createFixture(toSend);
+        console.log(fixtureResult);
+        this.snackBar.open('Fixture successfully created', '', {
+          duration: 3000
+        });
+        this.router.navigate(['admin']);
       }
     } catch(err) {
       this.snackBar.open(err, '', {

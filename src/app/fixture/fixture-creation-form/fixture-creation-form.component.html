@@ -66,6 +66,10 @@
     </div>
     <mat-card class="mat-card-list">
       <mat-list>
+        <mat-list-item *ngIf="existingSelectedGameweeks.length == 0 && newSelectedGameweeks.length == 0">
+          <mat-icon color="warn" mat-list-icon>error</mat-icon>
+          <h3 mat-line>No fixtures created</h3>
+        </mat-list-item>
         <mat-list-item *ngFor="let eg of existingSelectedGameweeks">
           <h3 mat-line>{{eg.competition.name}}</h3>
           <p mat-line>Gameweek: {{eg.weekNumber}} - Season: {{eg.season}}</p>

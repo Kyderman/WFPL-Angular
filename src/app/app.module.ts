@@ -32,6 +32,7 @@ import { PlayerBuilder } from './player/player.builder';
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MatMomentDateModule } from '@angular/material-moment-adapter';
 import { GameweekBuilder } from './gameweek/gameweek.builder';
+import { FixtureBuilder } from './fixture/fixture.builder';
 
 export function getJwtToken(): string {
   return localStorage.getItem('access_token');
@@ -83,6 +84,7 @@ export function getJwtToken(): string {
     TeamBuilder,
     PlayerBuilder,
     GameweekBuilder,
+    FixtureBuilder,
     MomentDateAdapter, MatMomentDateModule,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
     { provide: DateAdapter, useClass: MomentDateAdapter }

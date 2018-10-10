@@ -9,6 +9,8 @@ import { Team } from '../team/team';
 import { TeamBuilder } from '../team/team.builder';
 import { Player } from '../player/player';
 import { PlayerBuilder } from '../player/player.builder';
+import { FixtureBuilder } from '../fixture/fixture.builder';
+import { Fixture } from '../fixture/fixture';
 
 @Injectable()
 export class AdminService {
@@ -17,7 +19,8 @@ export class AdminService {
     private http: HttpClient,
     private competitionBuilder: CompetitionBuilder,
     private teamBuilder: TeamBuilder,
-    private playerBuilder: PlayerBuilder
+    private playerBuilder: PlayerBuilder,
+    private fixtureBuilder: FixtureBuilder
   ) {}
 
   public async createCompetition(data: any): Promise<Competition> {
@@ -63,6 +66,18 @@ export class AdminService {
       })
     } catch (err) {
       return Promise.reject(Error('There was a problem creating players.'));
+    }
+  }
+
+  public async createFixture(data: any): Promise<Fixture> {
+    try {
+      let response = await this.http.post(
+        `${environment.apiUrl}admin/fixtures`,
+        data
+      ).toPromise();
+      return this.fixtureBuilder.create(response['data']['fixture']);
+    } catch (err) {
+      return Promise.reject(Error('There was a problem creating this fixture.'));
     }
   }
 
