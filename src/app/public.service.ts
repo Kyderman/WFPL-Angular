@@ -126,6 +126,7 @@ export class PublicService {
         `${environment.apiUrl}public/lookup/competitions/${competitionId}/gameweeks?containsDate=${containsDate}`
       ).toPromise();
       if(response['data']['gameweek'] === null) { return null }
+      console.log(response)
       return this.gameweekBuilder.create(response['data']['gameweek']);
     } catch (err) {
       return Promise.reject(Error('There was a problem retrieving gameweek'));

@@ -37,7 +37,7 @@ export class FixtureCreationFormComponent implements OnInit {
 
   public competitionSelector: FormControl = new FormControl({value: '', disabled: true});
 
-  public matchingCompetitonGameweek: Gameweek;
+  public matchingCompetitionGameweek: Gameweek;
 
 
   public existingGameweeksList: Gameweek[] = [];
@@ -77,7 +77,7 @@ export class FixtureCreationFormComponent implements OnInit {
       debounceTime(400))
       .subscribe(async (value) => {
         if(this.selectedCompetition != null && value != '') {
-          this.matchingCompetitonGameweek = await this.publicService.lookupCompetitionGameweeks(
+          this.matchingCompetitionGameweek = await this.publicService.lookupCompetitionGameweeks(
             this.selectedCompetition.id,
             new Date(value));
           return;
@@ -92,7 +92,7 @@ export class FixtureCreationFormComponent implements OnInit {
           value = null;
         } else if (value instanceof Competition) {
           this.selectedCompetition = value;
-          this.matchingCompetitonGameweek = await this.publicService.lookupCompetitionGameweeks(
+          this.matchingCompetitionGameweek = await this.publicService.lookupCompetitionGameweeks(
             this.selectedCompetition.id,
             new Date(this.fixtureForm.form.controls['fixtureDate'].value
           ));
@@ -179,7 +179,12 @@ export class FixtureCreationFormComponent implements OnInit {
   }
 
   public async addExistingGameweek() {
-
+    this.matchingCompetitionGameweek.competition = this.selectedCompetition;
+    this.existingSelectedGameweeks.push(this.matchingCompetitionGameweek);
+    this.matchingCompetitionGameweek = null;
+    this.snackBar.open('Gameweek successfully added', '', {
+      duration: 3000
+    });
   }
 
   public onCancel() {
