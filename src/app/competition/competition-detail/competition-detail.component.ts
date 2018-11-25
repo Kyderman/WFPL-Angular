@@ -23,7 +23,12 @@ export class CompetitionDetailComponent implements OnInit {
   public async ngOnInit() {
     this.route.params.subscribe(async (p) => {
       this.competition = await this.publicService.getCompetition(p.id);
-      this.teams = await this.publicService.getCompetitionTeams(p.id)
+      this.teams = await this.publicService.getCompetitionTeams(p.id);
+      let t = await this.publicService.lookupCompetitionGameweekAndFixturesByDate(
+        this.competition.id,
+        new Date('08/28/2018')
+      );
+      console.log(t)
     })
   }
 

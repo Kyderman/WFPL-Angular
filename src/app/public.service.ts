@@ -11,6 +11,8 @@ import { Player } from './player/player';
 import { PlayerBuilder } from './player/player.builder';
 import { GameweekBuilder } from './gameweek/gameweek.builder';
 import { Gameweek } from './gameweek/gameweek';
+import { Fixture } from './fixture/fixture';
+import { FixtureBuilder } from './fixture/fixture.builder';
 
 @Injectable()
 export class PublicService {
@@ -20,7 +22,8 @@ export class PublicService {
     private competitionBuilder: CompetitionBuilder,
     private teamBuilder: TeamBuilder,
     private playerBuilder: PlayerBuilder,
-    private gameweekBuilder: GameweekBuilder
+    private gameweekBuilder: GameweekBuilder,
+    private fixtureBuilder: FixtureBuilder
   ) {}
 
   public async getAllCompetitions(): Promise<Competition[]> {
@@ -128,6 +131,36 @@ export class PublicService {
       if(response['data']['gameweek'] === null) { return null }
       console.log(response)
       return this.gameweekBuilder.create(response['data']['gameweek']);
+    } catch (err) {
+      return Promise.reject(Error('There was a problem retrieving gameweek'));
+    }
+  }
+
+  public async lookupGameweekFixtures(gameweekId: number): Promise<Fixture[]> {
+    try {
+      let response = await this.http.get(
+        `${environment.apiUrl}public/gameweeks/${gameweekId}/fixtures`
+      ).toPromise();
+      if (response['data']['fixtures'] === null) { return null }
+      console.log(response)
+      return await Bluebird.map(response['data']['fixtures'], async (f) => {
+        return this.fixtureBuilder.create(f);
+      });
+    } catch (err) {
+      return Promise.reject(Error('There was a problem retrieving fixtures'));
+    }
+  }
+
+  public async lookupCompetitionGameweekAndFixturesByDate(competitionId: number, containsDate: Date): Promise<Gameweek> {
+    try {
+      let response = await this.http.get(
+        `${environment.apiUrl}public/competitions/${competitionId}/fixtures?containsDate=${containsDate.toString()}`
+      ).toPromise();
+      if (response['data']['gameweek'] === null) { return null }
+      console.log(response)
+
+      return this.gameweekBuilder.create(response['data']['gameweek']);
+
     } catch (err) {
       return Promise.reject(Error('There was a problem retrieving gameweek'));
     }

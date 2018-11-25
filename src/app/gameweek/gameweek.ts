@@ -1,4 +1,5 @@
 import { Competition } from "../competition/competition";
+import { Fixture } from "../fixture/fixture";
 
 export class Gameweek {
 
@@ -11,6 +12,7 @@ export class Gameweek {
   public createdAt: Date = null;
   public updatedAt: Date = null;
   public competition: Competition = null;
+  public fixtures: Fixture[] = [];
 
   constructor(data: any) {
     this.id = data.id;
