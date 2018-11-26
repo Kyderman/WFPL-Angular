@@ -32,27 +32,59 @@
         </mat-list-item>
       </mat-nav-list>
     </mat-card>
+
+
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <h3 class="mat-card-outer-title">Clubs</h3>
+      <span class="spacer"></span>
+      <button class="mat-card-outer-title" mat-icon-button matTooltip="Add Clubs" (click)="addClub()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <mat-card class="mat-card-list">
+      <mat-nav-list>
+        <mat-list-item *ngIf="teams.length === 0">
+          <mat-icon color="warn" mat-list-icon>error</mat-icon>
+          <h3 mat-line>No clubs available</h3>
+        </mat-list-item>
+        <mat-list-item *ngFor="let team of teams" (click)="goToTeam(team)">
+          <mat-icon mat-list-icon>done</mat-icon>
+          <h3 mat-line>{{team.name}}</h3>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-card>
+
   </div>
 
-  <div class="" fxFlex="33">
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <h3 class="mat-card-outer-title">Clubs</h3>
-        <span class="spacer"></span>
-        <button class="mat-card-outer-title" mat-icon-button matTooltip="Add Clubs" (click)="addClub()">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-      <mat-card class="mat-card-list">
-        <mat-nav-list>
-          <mat-list-item *ngIf="teams.length === 0">
-            <mat-icon color="warn" mat-list-icon>error</mat-icon>
-            <h3 mat-line>No clubs available</h3>
-          </mat-list-item>
-          <mat-list-item *ngFor="let team of teams" (click)="goToTeam(team)">
-            <mat-icon mat-list-icon>done</mat-icon>
-            <h3 mat-line>{{team.name}}</h3>
-          </mat-list-item>
-        </mat-nav-list>
-      </mat-card>
+  <div class="" fxFlex="67">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <button class="mat-card-outer-title" mat-icon-button (click)="backGameweek()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h3 class="mat-card-outer-title">Gameweek {{currentGameweek?.weekNumber}}</h3>
+      <!-- <span class="spacer"></span> -->
+      <button class="mat-card-outer-title" mat-icon-button (click)="forwardGameweek()">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
     </div>
+    <mat-card class="mat-card-list">
+      <mat-nav-list>
+        <mat-list-item *ngIf="currentGameweek.fixtures?.length === 0">
+          <mat-icon color="warn" mat-list-icon>error</mat-icon>
+          <h3 mat-line>No fixtures for this gameweek</h3>
+        </mat-list-item>
+        <mat-list-item *ngFor="let fixture of currentGameweek.fixtures">
+          <div class="full-width" fxLayout="row" fxLayoutAlign="space-between center">
+
+              <h3 class="no-margin">{{fixture.homeTeam.name}}</h3>
+              <h3 class="no-margin">V</h3>
+              <h3 class="no-margin">{{fixture.awayTeam.name}}</h3>
+
+          </div>
+
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-card>
+  </div>
+
 </div>

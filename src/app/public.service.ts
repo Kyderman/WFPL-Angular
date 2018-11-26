@@ -166,5 +166,17 @@ export class PublicService {
     }
   }
 
+  public async lookupGameweek(competitionId: number, weekNumber: number): Promise<Gameweek> {
+    try {
+      let response = await this.http.get(
+        `${environment.apiUrl}public/competitions/${competitionId}/gameweeks/${weekNumber}`
+      ).toPromise();
+      if (response['data']['gameweek'] === null) { return null }
+      return this.gameweekBuilder.create(response['data']['gameweek']);
+    } catch (err) {
+      return Promise.reject(Error('There was a problem retrieving gameweek'));
+    }
+  }
+
 
 }
